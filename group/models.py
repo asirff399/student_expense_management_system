@@ -6,7 +6,7 @@ from account.models import Student
 class Group(models.Model):
     name = models.CharField(max_length=100)
     group_type = models.CharField(max_length=30,choices=GROUP_TYPE)
-    members =models.ManyToManyField(Student) 
+    members =models.ManyToManyField(Student,related_name='groups') 
 
     def __str__(self):
         return self.name
