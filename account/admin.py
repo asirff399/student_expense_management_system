@@ -1,6 +1,8 @@
 from django.contrib import admin
-from account.models import Student
+from .models import Student
 
 # Register your models here.
-class AccountAdmin(admin.ModelAdmin):
+class StudentAdmin(admin.ModelAdmin):
     list_display = ['user','college','semester','default_payment_methods']
+
+admin.site.register(Student,StudentAdmin) 

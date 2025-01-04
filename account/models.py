@@ -6,7 +6,7 @@ class Student(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     college = models.CharField(max_length=100)
     semester = models.PositiveIntegerField()
-    default_payment_methods = models.CharField(max_length=100) 
+    default_payment_methods = models.CharField(max_length=100)  
 
     def __str__(self):
         return self.user.get_full_name()
