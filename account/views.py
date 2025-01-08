@@ -1,13 +1,15 @@
 from django.shortcuts import render,redirect
 from rest_framework.views import APIView
-from .serializers import RegistrationSerializer,LoginSerializer
+from .serializers import RegistrationSerializer,LoginSerializer,StudentSerializer,UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken,AccessToken,TokenError
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,viewsets
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from .models import Student
+from django_filters.rest_framework import DjangoFilterBackend
 # for sending email
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -76,6 +78,16 @@ class UserLoginAPIView(APIView):
                 return Response({'error':'Invalid credentials'},status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class StudentViewset(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = {'user':['exact']} 
+
+class UserViewset(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 

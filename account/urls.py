@@ -3,9 +3,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import UserRegisterAPIView,activate,UserLoginAPIView
+from .views import UserRegisterAPIView,activate,UserLoginAPIView,StudentViewset,UserViewset
+from rest_framework.routers import DefaultRouter
+
+router=DefaultRouter()
+router.register('student/list',StudentViewset)
+router.register('users/list',UserViewset) 
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('register/', UserRegisterAPIView.as_view(), name='register'),
     path('login/', UserLoginAPIView.as_view(), name='login'),
     path('active/<uid64>/<token>/', activate, name='activate'),
